@@ -3,3 +3,10 @@ dist
 .env
 .env.local
 *.local
+
+# Vercel
+.vercel
+
+# variables d'environnement (le modèle .env.example reste suivi)
+.env*
+!.env.example
