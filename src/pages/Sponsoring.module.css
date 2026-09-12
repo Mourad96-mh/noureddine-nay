@@ -1,0 +1,202 @@
+/* Grille Sponsoring : un seul portrait, panneau de texte large, deux colonnes
+   de vignettes — reprise de la page Sponsoring des sites Karembeu et
+   Makélélé. */
+.grid {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1.5fr 2fr 0.6fr 0.6fr;
+  gap: var(--gap-grid);
+  flex: 1;
+  width: 100%;
+  height: 100vh;
+  padding: 3rem var(--container-pad);
+  background: var(--color-bg);
+}
+
+/* la même photo, floutée et assombrie, remplit la cellule sur toute sa
+   hauteur : le bloc reste plein comme dans le design d'origine, sans rogner
+   le sujet */
+.cellPortrait {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.cellPortrait::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/imgs/sponsoring/fifa-club-world-cup-2022.jpeg") center / cover no-repeat;
+  filter: blur(28px) brightness(0.45);
+  transform: scale(1.15);
+}
+
+.cellPortrait img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.cellText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-left: 2rem;
+  padding: var(--space-xl);
+  background: var(--color-panel);
+  overflow: hidden;
+}
+
+.eyebrow {
+  color: var(--color-gold);
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.name {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 3vw, 4.5rem);
+  line-height: 0.92;
+}
+
+.bio {
+  color: var(--color-muted);
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+.bio strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.bio + .bio {
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #b8923a26;
+}
+
+.valuesList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.valuesList li {
+  position: relative;
+  padding-left: 1rem;
+  color: var(--color-muted);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.valuesList li::before {
+  content: "";
+  position: absolute;
+  top: 0.55em;
+  left: 0;
+  width: 5px;
+  height: 1px;
+  background: var(--color-gold);
+}
+
+.sectors {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+  padding-top: var(--space-md);
+  border-top: 1px solid #b8923a33;
+}
+
+.sectorsLabel {
+  color: var(--color-gold);
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.sectorsList {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: clamp(0.9375rem, 1.1vw, 1.1875rem);
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+}
+
+.cellAction,
+.cellLogos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-grid);
+  height: 100%;
+}
+
+.actionItem,
+.logoItem {
+  flex: 1;
+  width: 100%;
+  background: var(--color-panel);
+  overflow: hidden;
+}
+
+.actionItem img,
+.logoItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* on bascule sur la grille compacte à 1080px, comme la navbar.
+   Contrairement à Palmarès, cette page n'a qu'un seul portrait : une grille
+   à 2 colonnes laisserait une demi-colonne vide à côté de la photo. */
+@media (max-width: 1080px) {
+  .grid {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .cellPortrait {
+    aspect-ratio: 16 / 9;
+    height: auto;
+  }
+
+  .cellText {
+    grid-column: 1 / -1;
+    margin-left: 0;
+    padding: var(--space-lg);
+  }
+
+  .cellAction,
+  .cellLogos {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+    padding: 2rem var(--container-pad);
+  }
+
+  .cellPortrait {
+    aspect-ratio: 4 / 3;
+  }
+
+  .cellAction,
+  .cellLogos {
+    height: 80px;
+  }
+}

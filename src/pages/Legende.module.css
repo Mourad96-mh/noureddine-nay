@@ -1,0 +1,262 @@
+/* Même grille éditoriale plein écran que les sites Karembeu et Makélélé :
+   portrait / panneau de texte / photo avec citation / photo / colonne de
+   vignettes, séparées par 6 px. */
+.grid {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-columns: 1.5fr 2fr 1.5fr 1fr 0.6fr;
+  gap: var(--gap-grid);
+  flex: 1;
+  width: 100%;
+  padding: 3rem var(--container-pad);
+  background: var(--color-bg);
+}
+
+.cellPortrait {
+  height: 100%;
+  overflow: hidden;
+}
+
+.cellPortrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.cellText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-left: 2rem;
+  padding: var(--space-md) var(--space-lg);
+  background: var(--color-panel);
+  overflow: hidden;
+}
+
+.eyebrow {
+  color: var(--color-gold);
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.name {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 2.5vw, 3.5rem);
+  line-height: 0.92;
+}
+
+.bio {
+  color: var(--color-muted);
+  font-family: var(--font-accent);
+  font-size: clamp(1rem, 1.1vw, 1.125rem);
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.bio em {
+  color: var(--color-ink);
+  font-family: var(--font-accent);
+  font-style: italic;
+}
+
+.legendList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.legendList li {
+  position: relative;
+  padding-left: 1.25rem;
+  color: var(--color-muted);
+  font-family: var(--font-body);
+  font-size: clamp(0.8125rem, 0.9vw, 0.9375rem);
+  line-height: 1.55;
+}
+
+.legendList li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--color-gold);
+  font-size: 0.875rem;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid #b8923a33;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.statNum {
+  color: var(--color-gold);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.statLabel {
+  color: var(--color-muted);
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cellGold {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.cellGold img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 35% top;
+}
+
+.goldOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-md);
+  background: linear-gradient(#0000 40%, #0a0a0ad9 100%);
+}
+
+/* texte posé sur le dégradé sombre de la photo : il faut une couleur claire
+   fixe, --color-ink étant sombre dans cette palette */
+.goldQuote {
+  color: var(--color-always-light);
+  font-family: var(--font-accent);
+  font-size: 0.8125rem;
+  font-style: italic;
+  line-height: 1.5;
+  text-shadow: 0 1px 3px #0009;
+}
+
+/* cadrage serré sur le Roi, au centre de la photo de cérémonie */
+.cellAction {
+  height: 100%;
+  background: var(--color-panel);
+  overflow: hidden;
+}
+
+.cellAction img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 52% center;
+}
+
+.cellLogos {
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: 1fr;
+  gap: var(--gap-grid);
+  height: 100%;
+}
+
+.logoItem {
+  background: var(--color-panel);
+  overflow: hidden;
+}
+
+.logoItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* on bascule sur la grille compacte à 1080px, comme la navbar : au-delà de
+   768px la grille à 5 colonnes réduisait la colonne de texte à ~190px */
+@media (max-width: 1080px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* cellText s'étend sur toute la largeur et sépare les deux cellules carrées
+     dans le DOM : sans order, chacune se retrouve seule sur sa ligne avec une
+     demi-colonne vide à côté */
+  .cellPortrait {
+    aspect-ratio: 1;
+    height: auto;
+    order: 1;
+    border: 3px solid var(--color-gold);
+    box-shadow: 0 0 24px #b8923a59;
+  }
+
+  .cellGold {
+    aspect-ratio: 1;
+    height: auto;
+    order: 2;
+  }
+
+  .cellText {
+    grid-column: 1 / -1;
+    order: 3;
+    margin-left: 0;
+    padding: var(--space-lg);
+  }
+
+  .cellAction {
+    aspect-ratio: 16 / 9;
+    grid-column: 1 / -1;
+    height: auto;
+    order: 4;
+  }
+
+  .cellLogos {
+    grid-column: 1 / -1;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(4, 1fr);
+    height: 120px;
+    order: 5;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+    padding: 2rem var(--container-pad);
+  }
+
+  .cellPortrait {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* en une seule colonne on retrouve l'enchaînement d'origine
+     portrait → texte → photo citation */
+  .cellText {
+    order: 2;
+  }
+
+  .cellGold {
+    aspect-ratio: 4 / 3;
+    order: 3;
+  }
+
+  .cellAction {
+    aspect-ratio: 4 / 3;
+  }
+
+  .cellLogos {
+    height: 80px;
+  }
+}

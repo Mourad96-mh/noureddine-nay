@@ -1,0 +1,198 @@
+/* Grille Partenariats : portrait, panneau de texte, photo, colonne de photos,
+   colonne de vignettes — reprise de la page Partenariats des sites Karembeu et
+   Makélélé. */
+.grid {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-columns: 1.5fr 1.6fr 1.7fr 0.6fr 0.6fr;
+  gap: var(--gap-grid);
+  flex: 1;
+  width: 100%;
+  padding: 3rem var(--container-pad);
+  background: var(--color-bg);
+}
+
+.cellPortrait,
+.cellPhoto {
+  height: 100%;
+  overflow: hidden;
+}
+
+.cellPortrait img,
+.cellPhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* les deux hommes occupent toute la largeur de la photo : on décale le
+   cadrage vers la gauche pour garder Naybet dans le cadre */
+.cellPortrait img {
+  object-position: 35% top;
+}
+
+.cellText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-left: 2rem;
+  padding: var(--space-xl) var(--space-lg);
+  background: var(--color-panel);
+  overflow: hidden;
+}
+
+.eyebrow {
+  color: var(--color-gold);
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.name {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 2.5vw, 3.5rem);
+  line-height: 0.92;
+}
+
+.intro {
+  margin-top: var(--space-sm);
+  color: var(--color-muted);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+
+.intro strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.valuesList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+.valuesList li {
+  position: relative;
+  padding-left: 2.25rem;
+  color: var(--color-muted);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.formatNum {
+  position: absolute;
+  left: 0;
+  color: var(--color-gold);
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  line-height: 1.2;
+}
+
+.partner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+  padding-top: var(--space-md);
+  border-top: 1px solid #b8923a33;
+}
+
+.partnerLabel {
+  color: var(--color-gold);
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.partnerName {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.cellAction,
+.cellLogos {
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  gap: var(--gap-grid);
+  height: 100%;
+}
+
+.actionItem,
+.logoItem {
+  background: var(--color-panel);
+  overflow: hidden;
+}
+
+.actionItem img,
+.logoItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* on bascule sur la grille compacte à 1080px, comme la navbar */
+@media (max-width: 1080px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cellPortrait,
+  .cellPhoto {
+    aspect-ratio: 1;
+    height: auto;
+  }
+
+  .cellText {
+    grid-column: 1 / -1;
+    order: 3;
+    margin-left: 0;
+    padding: var(--space-lg);
+  }
+
+  .cellAction,
+  .cellLogos {
+    grid-column: 1 / -1;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(4, 1fr);
+    height: 120px;
+    order: 4;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+    padding: 2rem var(--container-pad);
+  }
+
+  .cellPortrait {
+    aspect-ratio: 4 / 3;
+  }
+
+  .cellPhoto {
+    aspect-ratio: 4 / 3;
+    order: 2;
+  }
+
+  .cellText {
+    order: 1;
+  }
+
+  .cellAction,
+  .cellLogos {
+    height: 80px;
+  }
+}

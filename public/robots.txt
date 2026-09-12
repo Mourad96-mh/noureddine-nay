@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /boutique
+
+Sitemap: https://noureddinenaybet.com/sitemap.xml

@@ -1,0 +1,189 @@
+/* Grille Palmarès : deux portraits, panneau de texte, colonne de photos,
+   colonne de vignettes — reprise de la page Palmarès des sites Karembeu et
+   Makélélé. */
+.grid {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1.2fr 1.2fr 2fr 0.6fr 0.6fr;
+  gap: var(--gap-grid);
+  flex: 1;
+  width: 100%;
+  height: 100vh;
+  padding: 3rem var(--container-pad);
+  background: var(--color-bg);
+}
+
+.cellPortrait,
+.cellPortrait2 {
+  height: 100%;
+  overflow: hidden;
+}
+
+.cellPortrait img,
+.cellPortrait2 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.cellText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-left: 2rem;
+  padding: var(--space-lg) var(--space-xl);
+  background: var(--color-panel);
+  overflow: hidden;
+}
+
+.eyebrow {
+  color: var(--color-gold);
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.name {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 3vw, 4.5rem);
+  line-height: 0.92;
+}
+
+.intro {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #b8923a26;
+  color: var(--color-muted);
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+.quote {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  color: var(--color-ink);
+  font-family: var(--font-accent);
+  font-size: clamp(1rem, 1.3vw, 1.375rem);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.quoteAuthor {
+  color: var(--color-gold-dark);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-style: normal;
+  letter-spacing: 0.06em;
+}
+
+.clubsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.clubsItem {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.125rem, 1.4vw, 1.625rem);
+  letter-spacing: 0.06em;
+  transition: color var(--tr-fast);
+}
+
+.clubsItem:hover {
+  color: var(--color-gold);
+}
+
+.clubDot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  transition:
+    transform var(--tr-fast),
+    box-shadow var(--tr-fast);
+}
+
+.clubsItem:hover .clubDot {
+  transform: scale(1.5);
+  box-shadow: 0 0 0 4px #b8923a33;
+}
+
+.cellAction,
+.cellLogos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-grid);
+  height: 100%;
+}
+
+.actionItem,
+.logoItem {
+  flex: 1;
+  width: 100%;
+  background: var(--color-panel);
+  overflow: hidden;
+}
+
+.actionItem img,
+.logoItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* on bascule sur la grille compacte à 1080px, comme la navbar */
+@media (max-width: 1080px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    height: auto;
+  }
+
+  .cellPortrait,
+  .cellPortrait2 {
+    aspect-ratio: 1;
+    height: auto;
+  }
+
+  .cellText {
+    grid-column: 1 / -1;
+    margin-left: 0;
+    padding: var(--space-lg);
+  }
+
+  .cellAction,
+  .cellLogos {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+    padding: 2rem var(--container-pad);
+  }
+
+  .cellPortrait {
+    aspect-ratio: 4 / 3;
+  }
+
+  .cellPortrait2 {
+    display: none;
+  }
+
+  .cellAction,
+  .cellLogos {
+    height: 80px;
+  }
+}

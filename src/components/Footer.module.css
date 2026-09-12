@@ -1,0 +1,147 @@
+.footer {
+  background: var(--color-panel);
+  border-top: 1px solid #b8923a33;
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: var(--space-lg);
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-xl) var(--container-pad) var(--space-lg);
+}
+
+.brandLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logoMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  background: var(--color-gold);
+  border-radius: var(--radius-sm);
+  color: var(--color-always-dark);
+  font-family: var(--font-display);
+  font-size: 1.625rem;
+  line-height: 1;
+}
+
+.logoName {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.tagline {
+  max-width: 42ch;
+  margin-top: var(--space-md);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.navLink {
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color var(--tr-fast);
+}
+
+.navLink:hover {
+  color: var(--color-ink);
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.contactTitle {
+  margin-bottom: 0.25rem;
+  color: var(--color-gold-dark);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.contactLink {
+  color: var(--color-ink);
+  font-size: 0.875rem;
+  transition: color var(--tr-fast);
+}
+
+.contactLink:hover {
+  color: var(--color-gold-dark);
+}
+
+.contactCompany {
+  margin-top: 0.25rem;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-md) var(--container-pad) var(--space-lg);
+  border-top: 1px solid #b8923a26;
+}
+
+.copy,
+.legalLink {
+  color: var(--color-muted);
+  font-size: 0.75rem;
+}
+
+.legalLink:hover {
+  color: var(--color-ink);
+}
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+    padding-top: var(--space-lg);
+  }
+
+  .bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+}
+
+/* cibles tactiles : à partir du seuil tactile de la navbar (1080 px), les
+   liens du pied de page passent de 17 px à 36 px de hauteur */
+@media (max-width: 1080px) {
+  .nav {
+    gap: 0;
+  }
+
+  .navLink,
+  .contactLink,
+  .legalLink {
+    display: flex;
+    align-items: center;
+    min-height: 36px;
+  }
+}
