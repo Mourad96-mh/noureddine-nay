@@ -4,20 +4,12 @@ import styles from "./Legende.module.css";
 
 const logos = [
   {
-    src: "/imgs/legende/naybet-portrait-plateau.jpeg",
-    alt: "Noureddine Naybet, invité d'un plateau de télévision",
+    src: "/imgs/legende/04-mondial-2030.jpeg",
+    alt: "Affiche officielle de la Coupe du Monde FIFA 2030 : Maroc, Espagne, Portugal",
   },
   {
-    src: "/imgs/legende/naybet-selection-maroc.jpeg",
-    alt: "Noureddine Naybet sous le maillot numéro 6 des Lions de l'Atlas",
-  },
-  {
-    src: "/imgs/sponsoring/yalla-vamos-2030.jpeg",
-    alt: "Présentation officielle de la candidature Yalla Vamos 2030",
-  },
-  {
-    src: "/imgs/sponsoring/fifa-club-world-cup-2022.jpeg",
-    alt: "Noureddine Naybet lors du tirage au sort de la Coupe du Monde des Clubs, Maroc 2022",
+    src: "/imgs/legende/05-grand-stade-hassan-ii.jpeg",
+    alt: "Projection du Grand Stade Hassan II de Casablanca, écrin du Mondial 2030",
   },
 ];
 
@@ -51,8 +43,8 @@ export default function Legende() {
       <div className={styles.grid}>
         <div className={styles.cellPortrait}>
           <img
-            src="/imgs/legende/naybet-tirage-fifa.jpeg"
-            alt="Noureddine Naybet lors d'un tirage au sort officiel de la FIFA"
+            src="/imgs/legende/01-club-world-cup-2022.jpeg"
+            alt="Noureddine Naybet procède au tirage au sort de la Coupe du Monde des Clubs FIFA, Maroc 2022"
             loading="eager"
           />
         </div>
@@ -63,7 +55,7 @@ export default function Legende() {
           <p className={styles.bio}>
             Aujourd&apos;hui, la haute autorité de la diplomatie du Royaume chérifien du Maroc a
             choisi et nommé Noureddine Naybet <em>icône de la nation</em> et légende du football
-            mondial, ambassadeur officiel pour l&apos;organisation de la Coupe du Monde 2030.
+            mondial. Ambassadeur officiel pour l&apos;organisation de la Coupe du Monde 2030.
           </p>
           <ul className={styles.legendList}>
             <li>
@@ -71,18 +63,20 @@ export default function Legende() {
               géopolitique narratif hors norme.
             </li>
             <li>
-              Un alignement de valeurs d&apos;excellence, de rigueur, de discipline et
-              d&apos;expertise, porté sans faille au sein de la FRMF.
+              Un alignement de valeurs de la légende Naybet : excellence, rigueur, discipline,
+              expertise au sein de la FRMF, sans faille.
             </li>
             <li>
-              Une personnalité et une attitude exceptionnelles, qu&apos;il continue d&apos;incarner
-              après sa carrière de joueur.
+              Des valeurs qu&apos;il continue d&apos;incarner après carrière, avec une personnalité
+              et une attitude exceptionnelles.
             </li>
             <li>
-              L&apos;image d&apos;un Royaume fort, puissant, en progrès permanent et ouvert au monde
-              sans complexe.
+              Identiques à un Royaume fort, puissant, en progrès permanent, ouvert au monde sans
+              complexe.
             </li>
-            <li>Une fondation solide, stable, respectée et conquérante mondialement.</li>
+            <li>
+              Avec une fondation solide, stable, respectée et conquérante mondialement.
+            </li>
           </ul>
 
           <div className={styles.stats}>
@@ -99,8 +93,8 @@ export default function Legende() {
 
         <div className={styles.cellGold}>
           <img
-            src="/imgs/legende/naybet-figo.jpeg"
-            alt="Noureddine Naybet aux côtés de Luís Figo"
+            src="/imgs/legende/02-selection-maroc.jpeg"
+            alt="Noureddine Naybet, numéro 6, sous le maillot des Lions de l'Atlas"
             loading="eager"
           />
           <div className={styles.goldOverlay}>
@@ -113,7 +107,7 @@ export default function Legende() {
 
         <div className={styles.cellAction}>
           <img
-            src="/imgs/legende/nomination-royale.jpeg"
+            src="/imgs/legende/03-nomination-royale.jpeg"
             alt="Cérémonie officielle au Maroc en présence de Sa Majesté le Roi Mohammed VI"
             loading="lazy"
           />

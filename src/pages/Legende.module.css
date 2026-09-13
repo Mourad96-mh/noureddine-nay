@@ -4,7 +4,7 @@
 .grid {
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto;
-  grid-template-columns: 1.5fr 2fr 1.5fr 1fr 0.6fr;
+  grid-template-columns: 1.4fr 2fr 1.3fr 1fr 1fr;
   gap: var(--gap-grid);
   flex: 1;
   width: 100%;
@@ -21,7 +21,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
+  object-position: center;
 }
 
 .cellText {
@@ -123,11 +123,13 @@
   overflow: hidden;
 }
 
+/* portrait en pied : on ancre le cadrage en haut pour garder le visage
+   visible quand la cellule devient large (tablette et mobile) */
 .cellGold img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 35% top;
+  object-position: center 12%;
 }
 
 .goldOverlay {
@@ -164,24 +166,30 @@
   object-position: 52% center;
 }
 
+/* deux affiches seulement : on laisse chaque vignette à sa hauteur naturelle
+   et on centre la colonne, plutôt que deux demi-cellules à moitié vides */
 .cellLogos {
   display: grid;
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: auto auto;
   grid-template-columns: 1fr;
+  align-content: center;
   gap: var(--gap-grid);
   height: 100%;
 }
 
 .logoItem {
+  display: flex;
+  align-items: center;
   background: var(--color-panel);
   overflow: hidden;
 }
 
+/* les deux derniers visuels sont des affiches (texte + logos) : on les
+   affiche en entier plutôt que recadrés */
 .logoItem img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
+  height: auto;
+  object-fit: contain;
 }
 
 /* on bascule sur la grille compacte à 1080px, comme la navbar : au-delà de
@@ -225,9 +233,13 @@
   .cellLogos {
     grid-column: 1 / -1;
     grid-template-rows: 1fr;
-    grid-template-columns: repeat(4, 1fr);
-    height: 120px;
+    grid-template-columns: repeat(2, 1fr);
+    height: 160px;
     order: 5;
+  }
+
+  .cellLogos .logoItem img {
+    height: 100%;
   }
 }
 
@@ -257,6 +269,6 @@
   }
 
   .cellLogos {
-    height: 80px;
+    height: 140px;
   }
 }

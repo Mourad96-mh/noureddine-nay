@@ -10,76 +10,104 @@
  *   - la capture d'écran de téléphone perd ses bandes noires et l'UI Android ;
  *   - les photos d'agence perdent leur bandeau de filigrane en pied d'image.
  */
-import { mkdir } from "node:fs/promises";
+import { access, mkdir, stat } from "node:fs/promises";
 import { dirname } from "node:path";
 import sharp from "sharp";
 
 const SRC = {
-  legende1: "la legende/WhatsApp Image 2026-09-08 at 19.01.45.jpeg",
-  legende2: "la legende/WhatsApp Image 2026-09-08 at 19.01.50.jpeg",
-  plateau: "palmares images/WhatsApp Image 2026-09-07 at 22.13.31.jpeg",
-  deportivo: "palmares images/WhatsApp Image 2026-09-07 at 22.15.48.jpeg",
-  tottenham: "palmares images/WhatsApp Image 2026-09-07 at 22.15.49 (1).jpeg",
-  zidane: "palmares images/WhatsApp Image 2026-09-07 at 22.15.49 (2).jpeg",
-  dreamcast: "palmares images/WhatsApp Image 2026-09-07 at 22.15.49 (3).jpeg",
-  equipeCL: "palmares images/WhatsApp Image 2026-09-07 at 22.15.49 (4).jpeg",
-  trophee: "palmares images/WhatsApp Image 2026-09-07 at 22.15.49 (5).jpeg",
-  celebration: "palmares images/WhatsApp Image 2026-09-07 at 22.15.49.jpeg",
-  scaloni: "palmares images/WhatsApp Image 2026-09-07 at 22.15.50.jpeg",
-  scaloniOnze: "palmares images/WhatsApp Image 2026-09-07 at 22.15.50 (1).jpeg",
-  sporting: "palmares images/WhatsApp Image 2026-09-07 at 22.15.50 (2).jpeg",
-  sportingTop30: "palmares images/WhatsApp Image 2026-09-11 at 11.15.11.jpeg",
-  tirage: "partenariats images/WhatsApp Image 2026-09-07 at 22.22.56.jpeg",
-  maroc: "partenariats images/WhatsApp Image 2026-09-07 at 22.24.14.jpeg",
-  clubWC: "sponsoring images/WhatsApp Image 2026-09-07 at 22.17.52.jpeg",
-  presse: "sponsoring images/WhatsApp Image 2026-09-07 at 22.20.37.jpeg",
-  yalla: "sponsoring images/WhatsApp Image 2026-09-07 at 22.21.35.jpeg",
+  // dossier « la legende » : les 5 visuels numérotés par le client, dans
+  // l'ordre où ils doivent apparaître sur la page d'accueil
+  legende1: "la legende/first.jpeg",
+  legende2: "la legende/second.jpeg",
+  legende3: "la legende/third.jpeg",
+  legende4: "la legende/fourth.jpeg",
+  legende5: "la legende/fifth.jpeg",
+  // dossier « palmares images » : les 9 visuels numérotés par le client
+  palmares1: "palmares images/first.jpeg",
+  palmares2: "palmares images/second.jpeg",
+  palmares3: "palmares images/third.jpeg",
+  palmares4: "palmares images/fourth.jpeg",
+  palmares5: "palmares images/WhatsApp Image 2026-09-13 at 19.10.05.jpeg",
+  palmares6: "palmares images/WhatsApp Image 2026-09-13 at 19.10.05 (1).jpeg",
+  palmares7: "palmares images/WhatsApp Image 2026-09-13 at 19.10.06.jpeg",
+  palmares8: "palmares images/WhatsApp Image 2026-09-13 at 19.10.06 (1).jpeg",
+  palmares9: "palmares images/WhatsApp Image 2026-09-13 at 19.10.07.jpeg",
+  // dossier « partenariats images » : les visuels numérotés par le client
+  partenariats1: "partenariats images/first.jpeg",
+  partenariats2: "partenariats images/second.jpeg",
+  partenariats3: "partenariats images/third.jpeg",
+  // dossier « sponsoring images » : les visuels numérotés par le client
+  sponsoring1: "sponsoring images/first.jpeg",
+  sponsoring2: "sponsoring images/second.jpeg",
+  sponsoring3: "sponsoring images/third.jpeg",
+  sponsoring4: "sponsoring images/fourth.jpeg",
 };
 
 // crop : { left, top, width, height } appliqué avant l'export
 const JOBS = [
-  { src: "tirage", out: "public/imgs/legende/naybet-tirage-fifa.jpeg" },
-  { src: "legende2", out: "public/imgs/legende/naybet-figo.jpeg" },
+  // page « La Légende » : les 5 visuels dans l'ordre demandé
+  { src: "legende1", out: "public/imgs/legende/01-club-world-cup-2022.jpeg" },
+  { src: "legende2", out: "public/imgs/legende/02-selection-maroc.jpeg" },
   {
-    src: "legende1",
-    out: "public/imgs/legende/nomination-royale.jpeg",
+    src: "legende3",
+    out: "public/imgs/legende/03-nomination-royale.jpeg",
     crop: { left: 0, top: 484, width: 738, height: 632 },
   },
-  { src: "plateau", out: "public/imgs/legende/naybet-portrait-plateau.jpeg" },
-  { src: "maroc", out: "public/imgs/legende/naybet-selection-maroc.jpeg" },
+  { src: "legende4", out: "public/imgs/legende/04-mondial-2030.jpeg" },
+  { src: "legende5", out: "public/imgs/legende/05-grand-stade-hassan-ii.jpeg" },
 
+  // page « Palmarès » : les 9 visuels dans l'ordre demandé ; les deux photos
+  // d'agence perdent leur bandeau de filigrane en pied d'image
   {
-    src: "deportivo",
-    out: "public/imgs/palmares/deportivo-action.jpeg",
+    src: "palmares1",
+    out: "public/imgs/palmares/01-deportivo-action.jpeg",
     crop: { left: 0, top: 0, width: 797, height: 1197 },
   },
+  { src: "palmares2", out: "public/imgs/palmares/02-selection-maroc.jpeg" },
   {
-    src: "tottenham",
-    out: "public/imgs/palmares/tottenham-action.jpeg",
+    src: "palmares3",
+    out: "public/imgs/palmares/03-tottenham-action.jpeg",
     crop: { left: 0, top: 0, width: 797, height: 1197 },
   },
-  {
-    src: "equipeCL",
-    out: "public/imgs/palmares/deportivo-champions-league.jpeg",
-    crop: { left: 0, top: 0, width: 1280, height: 854 },
-  },
-  { src: "zidane", out: "public/imgs/palmares/naybet-zidane.jpeg" },
-  { src: "dreamcast", out: "public/imgs/palmares/deportivo-dreamcast.jpeg" },
-  { src: "trophee", out: "public/imgs/palmares/deportivo-trophee.jpeg" },
-  { src: "celebration", out: "public/imgs/palmares/deportivo-titre.jpeg" },
-  { src: "scaloni", out: "public/imgs/palmares/scaloni-citation.jpeg" },
-  { src: "scaloniOnze", out: "public/imgs/palmares/scaloni-onze.jpeg" },
-  { src: "sporting", out: "public/imgs/palmares/sporting-lisbonne.jpeg" },
-  { src: "sportingTop30", out: "public/imgs/palmares/sporting-legendes.jpeg" },
+  { src: "palmares4", out: "public/imgs/palmares/04-deportivo-celebration.jpeg" },
+  { src: "palmares5", out: "public/imgs/palmares/05-naybet-zidane.jpeg" },
+  { src: "palmares6", out: "public/imgs/palmares/06-deportivo-dreamcast.jpeg" },
+  { src: "palmares7", out: "public/imgs/palmares/07-deportivo-titre.jpeg" },
+  { src: "palmares8", out: "public/imgs/palmares/08-scaloni-citation.jpeg" },
+  { src: "palmares9", out: "public/imgs/palmares/09-scaloni-onze.jpeg" },
 
-  { src: "clubWC", out: "public/imgs/sponsoring/fifa-club-world-cup-2022.jpeg" },
-  { src: "yalla", out: "public/imgs/sponsoring/yalla-vamos-2030.jpeg" },
-  { src: "presse", out: "public/imgs/sponsoring/presse-la-tour-royale.jpeg" },
+  // page « Partenariats » : les visuels dans l'ordre demandé
+  { src: "partenariats1", out: "public/imgs/partenariats/01-portrait-plateau.jpeg" },
+  { src: "partenariats2", out: "public/imgs/partenariats/02-tirage-fifa.jpeg" },
+  { src: "partenariats3", out: "public/imgs/partenariats/03-mondial-2030.jpeg" },
+
+  // page « Sponsoring » : les visuels dans l'ordre demandé
+  { src: "sponsoring1", out: "public/imgs/sponsoring/01-portrait-plateau.jpeg" },
+  { src: "sponsoring2", out: "public/imgs/sponsoring/02.jpeg" },
+  { src: "sponsoring3", out: "public/imgs/sponsoring/03-selection-maroc.jpeg" },
+  { src: "sponsoring4", out: "public/imgs/sponsoring/04-mondial-2030.jpeg" },
 ];
+
+// une source encore en cours de copie depuis OneDrive fait 0 octet : on la
+// traite comme absente
+async function isReadable(path) {
+  try {
+    await access(path);
+    return (await stat(path)).size > 0;
+  } catch {
+    return false;
+  }
+}
 
 async function run() {
   for (const job of JOBS) {
     const src = SRC[job.src];
+    // le client renomme et remplace ses dossiers photo au fil de l'eau : on
+    // saute la source absente au lieu d'interrompre toute la préparation
+    if (!(await isReadable(src))) {
+      console.warn(`source absente ou vide, ignorée : ${src}`);
+      continue;
+    }
     await mkdir(dirname(job.out), { recursive: true });
     let img = sharp(src).rotate();
     if (job.crop) img = img.extract(job.crop);
@@ -89,7 +117,8 @@ async function run() {
   }
 
   // image de partage (Open Graph / Twitter) : 1200x630 depuis le portrait
-  await sharp(SRC.tirage)
+  if (!(await isReadable(SRC.partenariats2))) return;
+  await sharp(SRC.partenariats2)
     .resize(1200, 630, { fit: "cover", position: "top" })
     .jpeg({ quality: 86, progressive: true, mozjpeg: true })
     .toFile("public/imgs/og-noureddine-naybet.jpeg");

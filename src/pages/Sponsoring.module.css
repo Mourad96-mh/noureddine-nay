@@ -4,7 +4,7 @@
 .grid {
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: 1.5fr 2fr 0.6fr 0.6fr;
+  grid-template-columns: 1.5fr 2fr 0.8fr;
   gap: var(--gap-grid);
   flex: 1;
   width: 100%;
@@ -26,7 +26,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: url("/imgs/sponsoring/fifa-club-world-cup-2022.jpeg") center / cover no-repeat;
+  background: url("/imgs/sponsoring/01-portrait-plateau.jpeg") center / cover no-repeat;
   filter: blur(28px) brightness(0.45);
   transform: scale(1.15);
 }
@@ -133,6 +133,11 @@
   line-height: 1.35;
 }
 
+.cta {
+  align-self: flex-start;
+  margin-top: var(--space-sm);
+}
+
 .cellAction,
 .cellLogos {
   display: flex;
@@ -155,6 +160,11 @@
   height: 100%;
   object-fit: cover;
   object-position: top center;
+}
+
+/* visuels porteurs de texte (affiches) : affichés en entier */
+.fitContain img {
+  object-fit: contain;
 }
 
 /* on bascule sur la grille compacte à 1080px, comme la navbar.

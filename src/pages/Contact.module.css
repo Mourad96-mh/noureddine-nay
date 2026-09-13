@@ -1,73 +1,62 @@
-.page {
-  display: flex;
+/* Même grille éditoriale plein écran que les autres pages (Légende, Palmarès,
+   Sponsoring, Partenariats) : photo pleine hauteur + panneau de texte, séparés
+   par 6 px, et les mêmes bascules responsive à 1080 px puis 480 px. */
+.grid {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-columns: 1.5fr 2fr;
+  gap: var(--gap-grid);
   flex: 1;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-lg) var(--container-pad) var(--space-xl);
+  width: 100%;
+  padding: 3rem var(--container-pad);
   background: var(--color-bg);
 }
 
-.card {
-  display: grid;
-  grid-template-columns: 420px 1fr;
-  width: 100%;
-  max-width: 960px;
-  min-height: 580px;
-  max-height: 820px;
-  background: var(--color-panel);
-  box-shadow: var(--shadow-card);
-  overflow: hidden;
-}
-
-.imagePanel {
-  position: relative;
+.cellPortrait {
+  height: 100%;
   background: var(--color-blue-deep);
   overflow: hidden;
 }
 
-.sidePhoto {
-  position: absolute;
-  inset: 0;
+.cellPortrait img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  opacity: 0.9;
-  filter: grayscale(20%) contrast(1.05);
-  transition:
-    filter var(--tr-base),
-    opacity var(--tr-base);
 }
 
-.imagePanel:hover .sidePhoto {
-  opacity: 1;
-  filter: grayscale(0%) contrast(1.05);
-}
-
-.formPanel {
-  display: flex;
-  overflow: hidden;
-}
-
-.formInner {
+.cellText {
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: var(--space-sm);
-  width: 100%;
+  margin-left: 2rem;
   padding: var(--space-lg) var(--space-xl);
+  background: var(--color-panel);
+  overflow: hidden;
 }
 
 .eyebrow {
-  color: var(--color-gold-dark);
+  color: var(--color-gold);
+  font-family: var(--font-body);
   font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
 }
 
 .title {
-  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 2.5vw, 3rem);
+  line-height: 0.95;
+}
+
+.intro {
+  color: var(--color-muted);
+  font-family: var(--font-accent);
+  font-size: clamp(0.9375rem, 1vw, 1.0625rem);
+  font-style: italic;
+  line-height: 1.55;
 }
 
 .domains {
@@ -224,24 +213,38 @@
   color: var(--color-gold);
 }
 
-@media (max-width: 900px) {
-  .card {
+/* on bascule sur la grille compacte à 1080px, comme la navbar et les autres
+   pages */
+@media (max-width: 1080px) {
+  .grid {
     grid-template-columns: 1fr;
-    min-height: 0;
-    max-height: none;
   }
 
-  .imagePanel {
-    aspect-ratio: 4 / 3;
+  .cellPortrait {
+    aspect-ratio: 16 / 9;
+    height: auto;
   }
 
-  .sidePhoto {
+  .cellPortrait img {
     object-position: center 20%;
+  }
+
+  .cellText {
+    margin-left: 0;
+    padding: var(--space-lg);
   }
 }
 
-@media (max-width: 600px) {
-  .formInner {
+@media (max-width: 480px) {
+  .grid {
+    padding: 2rem var(--container-pad);
+  }
+
+  .cellPortrait {
+    aspect-ratio: 4 / 3;
+  }
+
+  .cellText {
     padding: var(--space-lg) var(--space-md);
   }
 

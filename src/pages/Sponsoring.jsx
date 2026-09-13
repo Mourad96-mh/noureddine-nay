@@ -1,15 +1,18 @@
+import Button from "../components/Button.jsx";
 import Seo from "../components/Seo.jsx";
 import { SITE_URL } from "../config.js";
 import styles from "./Sponsoring.module.css";
 
 const leviers = [
-  "Vos ventes — un levier commercial immédiat et surdimensionné",
+  "Vos ventes — un retour sur investissement financier et économique immédiat",
   "Votre notoriété vis-à-vis de vos clients, au Maroc comme à l'international",
   "Votre crédibilité vis-à-vis de vos partenaires",
   "Vos levées de fonds et vos négociations stratégiques",
 ];
 
 const secteurs = [
+  "Votre marque",
+  "Votre entreprise",
   "Banques",
   "Compagnies aériennes",
   "Assurances",
@@ -19,33 +22,18 @@ const secteurs = [
   "Tous secteurs d'activité",
 ];
 
+// visuels du dossier « sponsoring images », dans l'ordre numéroté du client
+// (second.jpeg est arrivé vide : sa vignette sera ajoutée dès réception)
 const actionImages = [
   {
-    src: "/imgs/sponsoring/yalla-vamos-2030.jpeg",
-    alt: "Présentation officielle de la candidature Yalla Vamos 2030",
+    src: "/imgs/sponsoring/03-selection-maroc.jpeg",
+    alt: "Noureddine Naybet, numéro 6, sous le maillot des Lions de l'Atlas",
   },
   {
-    src: "/imgs/sponsoring/presse-la-tour-royale.jpeg",
-    alt: "Page de presse consacrée à Noureddine Naybet, « La tour royale »",
-  },
-  {
-    src: "/imgs/legende/naybet-tirage-fifa.jpeg",
-    alt: "Noureddine Naybet lors d'un tirage au sort officiel de la FIFA",
-  },
-];
-
-const logoImages = [
-  {
-    src: "/imgs/legende/naybet-selection-maroc.jpeg",
-    alt: "Noureddine Naybet sous le maillot numéro 6 des Lions de l'Atlas",
-  },
-  {
-    src: "/imgs/legende/naybet-portrait-plateau.jpeg",
-    alt: "Noureddine Naybet, invité d'un plateau de télévision",
-  },
-  {
-    src: "/imgs/legende/naybet-figo.jpeg",
-    alt: "Noureddine Naybet aux côtés de Luís Figo",
+    src: "/imgs/sponsoring/04-mondial-2030.jpeg",
+    alt: "Affiche officielle de la Coupe du Monde FIFA 2030 : Maroc, Espagne, Portugal",
+    // affiche : à montrer en entier, le recadrage couperait le texte
+    contain: true,
   },
 ];
 
@@ -56,14 +44,14 @@ export default function Sponsoring() {
         title="Noureddine Naybet — Sponsoring | Site Officiel"
         description="Coupe du Monde 2030 : associez votre image et alignez vos valeurs à celles de Noureddine Naybet, ambassadeur officiel. Notoriété, crédibilité et retour sur investissement pour votre marque."
         path="/sponsoring"
-        image={`${SITE_URL}/imgs/sponsoring/yalla-vamos-2030.jpeg`}
+        image={`${SITE_URL}/imgs/sponsoring/04-mondial-2030.jpeg`}
       />
 
       <div className={styles.grid}>
         <div className={styles.cellPortrait}>
           <img
-            src="/imgs/sponsoring/fifa-club-world-cup-2022.jpeg"
-            alt="Noureddine Naybet lors du tirage au sort de la Coupe du Monde des Clubs de la FIFA, Maroc 2022"
+            src="/imgs/sponsoring/01-portrait-plateau.jpeg"
+            alt="Noureddine Naybet, invité d'un plateau de télévision"
             loading="eager"
           />
         </div>
@@ -79,7 +67,7 @@ export default function Sponsoring() {
           <p className={styles.bio}>
             Directeurs marketing, dirigeants : associez votre image et alignez vos valeurs à celles
             d&apos;une légende à la puissance marketing narrative hors norme, au bénéfice de
-            leviers surdimensionnés et immédiats.
+            leviers surdimensionnés et immédiats — le « ROI » de votre marketing.
           </p>
           <ul className={styles.valuesList}>
             {leviers.map((levier) => (
@@ -90,19 +78,17 @@ export default function Sponsoring() {
             <span className={styles.sectorsLabel}>Tous secteurs</span>
             <p className={styles.sectorsList}>{secteurs.join(" · ")}</p>
           </div>
+          <Button to="/partenariats" className={styles.cta}>
+            Voir les formats de contrats de collaboration
+          </Button>
         </div>
 
         <div className={styles.cellAction}>
           {actionImages.map((image) => (
-            <div key={image.alt} className={styles.actionItem}>
-              <img src={image.src} alt={image.alt} loading="lazy" />
-            </div>
-          ))}
-        </div>
-
-        <div className={styles.cellLogos}>
-          {logoImages.map((image) => (
-            <div key={image.alt} className={styles.logoItem}>
+            <div
+              key={image.alt}
+              className={`${styles.actionItem} ${image.contain ? styles.fitContain : ""}`}
+            >
               <img src={image.src} alt={image.alt} loading="lazy" />
             </div>
           ))}
